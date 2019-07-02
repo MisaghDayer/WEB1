@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Archive_Db_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+          <Property Name="CustumerAddress" Type="varchar(max)" />
+          <Property Name="CustomerTel" Type="varchar" MaxLength="11" />
+          <Property Name="CustomerStartDate" Type="varchar" MaxLength="50" />
+          <Property Name="User_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ACTIVE" Type="bit" Nullable="false" />
+          <Property Name="UserStartDate" Type="varchar" MaxLength="20" />
+          <Property Name="UserGender" Type="tinyint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Archive_Db_new.dbo.Vw_Customer' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vw_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Family" />
+            <PropertyRef Name="FullName" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+          <Property Name="CustumerAddress" Type="varchar(max)" />
+          <Property Name="CustomerTel" Type="varchar" MaxLength="11" />
+          <Property Name="CustomerStartDate" Type="varchar" MaxLength="50" />
+          <Property Name="User_ID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="201" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Archive_Db_new.dbo.Vw_People' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Vw_People">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Role_ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Family" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="ACTIVE" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="ACTIVE" Type="bit" Nullable="false" />
+          <Property Name="UserStartDate" Type="varchar" MaxLength="20" />
+          <Property Name="UserGender" Type="tinyint" />
+          <Property Name="Status" Type="varchar" MaxLength="8" />
+          <Property Name="Gender" Type="varchar" MaxLength="4" />
+        </EntityType>
+        <Association Name="FK_Customer_UserID">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Archive_Db_newModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vw_Customer" EntityType="Self.Vw_Customer" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vw_Customer].[CustomerID] AS [CustomerID], 
+    [Vw_Customer].[CustomerName] AS [CustomerName], 
+    [Vw_Customer].[CustumerAddress] AS [CustumerAddress], 
+    [Vw_Customer].[CustomerTel] AS [CustomerTel], 
+    [Vw_Customer].[CustomerStartDate] AS [CustomerStartDate], 
+    [Vw_Customer].[User_ID] AS [User_ID], 
+    [Vw_Customer].[Name] AS [Name], 
+    [Vw_Customer].[Family] AS [Family], 
+    [Vw_Customer].[FullName] AS [FullName]
+    FROM [dbo].[Vw_Customer] AS [Vw_Customer]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Vw_People" EntityType="Self.Vw_People" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Vw_People].[User_ID] AS [User_ID], 
+    [Vw_People].[Role_ID] AS [Role_ID], 
+    [Vw_People].[Name] AS [Name], 
+    [Vw_People].[Family] AS [Family], 
+    [Vw_People].[Username] AS [Username], 
+    [Vw_People].[Password] AS [Password], 
+    [Vw_People].[ACTIVE] AS [ACTIVE], 
+    [Vw_People].[UserStartDate] AS [UserStartDate], 
+    [Vw_People].[UserGender] AS [UserGender], 
+    [Vw_People].[Status] AS [Status], 
+    [Vw_People].[Gender] AS [Gender]
+    FROM [dbo].[Vw_People] AS [Vw_People]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Customer_UserID" Association="Self.FK_Customer_UserID">
+            <End Role="People" EntitySet="People" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Archive_Db_newModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustumerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerTel" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="Person" Relationship="Self.FK_Customer_UserID" FromRole="Customer" ToRole="People" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Family" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="UserStartDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserGender" Type="Byte" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_UserID" FromRole="People" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Vw_Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Family" />
+            <PropertyRef Name="FullName" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustumerAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerTel" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerStartDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Family" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="201" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vw_People">
+          <Key>
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="Role_ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Family" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="Password" />
+            <PropertyRef Name="ACTIVE" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Family" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ACTIVE" Type="Boolean" Nullable="false" />
+          <Property Name="UserStartDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserGender" Type="Byte" />
+          <Property Name="Status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Customer_UserID">
+          <End Role="People" Type="Self.Person" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Archive_Db_newEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Vw_Customer" EntityType="Self.Vw_Customer" />
+          <EntitySet Name="Vw_People" EntityType="Self.Vw_People" />
+          <AssociationSet Name="FK_Customer_UserID" Association="Self.FK_Customer_UserID">
+            <End Role="People" EntitySet="People" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Archive_Db_newModelStoreContainer" CdmEntityContainer="Archive_Db_newEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="Archive_Db_newModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Archive_Db_newModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustumerAddress" ColumnName="CustumerAddress" />
+                <ScalarProperty Name="CustomerTel" ColumnName="CustomerTel" />
+                <ScalarProperty Name="CustomerStartDate" ColumnName="CustomerStartDate" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="Archive_Db_newModel.Person">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="UserStartDate" ColumnName="UserStartDate" />
+                <ScalarProperty Name="UserGender" ColumnName="UserGender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vw_Customer">
+            <EntityTypeMapping TypeName="Archive_Db_newModel.Vw_Customer">
+              <MappingFragment StoreEntitySet="Vw_Customer">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustumerAddress" ColumnName="CustumerAddress" />
+                <ScalarProperty Name="CustomerTel" ColumnName="CustomerTel" />
+                <ScalarProperty Name="CustomerStartDate" ColumnName="CustomerStartDate" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vw_People">
+            <EntityTypeMapping TypeName="Archive_Db_newModel.Vw_People">
+              <MappingFragment StoreEntitySet="Vw_People">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+                <ScalarProperty Name="UserStartDate" ColumnName="UserStartDate" />
+                <ScalarProperty Name="UserGender" ColumnName="UserGender" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

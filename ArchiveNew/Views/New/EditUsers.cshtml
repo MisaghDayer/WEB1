@@ -1,0 +1,94 @@
+﻿@model IEnumerable<ArchiveNew.Models.Person>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        h1 {
+            padding-left: 20px;
+            padding-top: 20px;
+        }
+
+        p {
+            padding-left: 40px;
+            padding-bottom: 40px;
+        }
+
+        .col-25 {
+          float: left;
+          width: 20%;
+          margin-top: 6px;
+        }
+
+        .col-75 {
+          float: left;
+          width: 40%;
+          margin-top: 6px;
+        }
+        * {
+          box-sizing: border-box;
+        }
+        .container {
+          border-radius: 5px;
+          background-color: #f2f2f2;
+          padding: 20px;
+        }
+
+        .row:after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditUsers</title>
+
+</head>
+<body>
+    <div>
+        <h1>Mangage All Users</h1>
+        <p>This is a list of all users. Click on details to select a user</p>
+
+
+        @foreach (var item in Model)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="uid">User ID: @item.User_ID</label>
+                    </div>
+                    <div class="col-25">
+                        <label for="fname">First Name: @item.Name</label>
+                    </div>
+                    <div class="col-25">
+                        <label for="lname">Last Name: @item.Family</label>
+                    </div>
+                    <div class="col-25">
+                        <label for="uname">User Name: @item.Username</label>
+                    </div>
+                    <div class="col-25">
+
+                        @if (item.ACTIVE)
+                        {
+                            <a href="/New/Activation/@item.User_ID">Deacivate</a>
+                        }
+                        else
+                        {
+                            <a href="/New/Activation/@item.User_ID">Activate</a>
+                        }
+
+                        <a href="/New/Details/@item.User_ID">Details</a>
+                    </div>
+                </div>
+                
+            </div>
+
+
+         }
+    </div>
+</body>
+</html>

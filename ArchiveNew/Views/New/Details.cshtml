@@ -1,0 +1,105 @@
+﻿@model ArchiveNew.Models.Person
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Manage Users</h2>
+    <p>User_ID is @Model.User_ID</p>
+
+    <div class="container">
+        <form method="post" action="/New/SaveDetailChanges">
+            <input type="hidden"  name="uid" value="@Model.User_ID" />
+            <div class="row">
+                <div class="col-25">
+                    <label for="fname">Current First Name: @Model.Name</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="fname" name="firstname" placeholder=@Model.Name>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname">Current Last Name: @Model.Family</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="lname" name="lastname" placeholder=@Model.Family>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label for="lname">Current User Name: @Model.Username</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="uname" name="username" placeholder=@Model.Username>
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="submit" value="Save Chasnges">
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
